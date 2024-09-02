@@ -28,3 +28,7 @@
 > - The mongo-express can be accessed at `http://localhost:8081/` and the following credentials will allow to login:
 >   > - username: admin
 >   > - password: password
+
+# Running the backend express app:
+
+> cd to `~/task-manager/back-end` and run `NODE_ENV=development node app.js`
