@@ -29,7 +29,7 @@ This contains frontend this application, which is written using React
   > - username: admin
   > - password: password
 
-# Setting up database:
+# Initializing database:
 
 - Ensure that a database named task-manager is created (can create using mongo express)
 - run the command `NODE_ENV=development TASK_MANAGER_INITIALIZE_DB=Y node ./db/initialize.js` in `back-end` folder
