@@ -2,10 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connectDb = require("./db/db");
 const userRoutes = require("./routes/user-routes");
+const swaggerDocs = require("./swagger/swagger");
 
 connectDb();
 const app = express();
-const port = 3000;
+const port = 3001;
+
+// Parse JSON request bodies
+app.use(express.json());
+
+// Parse URL-encoded request bodies
+app.use(express.urlencoded({ extended: true }));
+
+// Use swagger
+swaggerDocs(app, port);
 
 app.use("/api/users", userRoutes);
 
