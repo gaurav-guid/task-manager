@@ -1,5 +1,5 @@
 const express = require("express");
-const UserController = require("../controllers/user-controller");
+const authController = require("../controllers/auth-controller");
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ const router = express.Router();
  *         description: Successful operation
  */
 router.post("/signup", async (req, res) => {
-  await UserController.signup(req, res);
+  await authController.signup(req, res);
 });
 
 /**

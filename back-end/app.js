@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDb = require("./db/db");
-const userRoutes = require("./routes/user-routes");
+const authRoutes = require("./routes/auth-routes");
 const swaggerDocs = require("./swagger/swagger");
 
 connectDb();
@@ -17,8 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 // Use swagger
 swaggerDocs(app, port);
 
-app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
+//DEBT: Remove unwanted routes
 app.get("/api", (req, res) => {
   res.send("Hello world from express app!!");
 });
