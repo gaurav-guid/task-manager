@@ -4,6 +4,7 @@ const connectDb = require("./db/db");
 const authRoutes = require("./routes/auth-routes");
 const swaggerDocs = require("./swagger/swagger");
 const environment = require("./services/env-service");
+const { authenticateToken } = require("./middleware/authenticate-token");
 
 connectDb();
 const app = express();
@@ -21,7 +22,7 @@ swaggerDocs(app, port);
 app.use("/api/auth", authRoutes);
 
 //DEBT: Remove unwanted routes
-app.get("/api", (req, res) => {
+app.get("/api", authenticateToken, (req, res) => {
   res.send("Hello world from express app!!");
 });
 

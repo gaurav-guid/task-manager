@@ -12,7 +12,19 @@ const options = {
     },
     components: {
       schemas: schemas,
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
     },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: ["./routes/*.js"], // Path to the route files
 };
@@ -20,7 +32,26 @@ const options = {
 const swaggerSpec = swaggerJsDoc(options);
 
 const swaggerDocs = (app, port) => {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      swaggerOptions: {
+        authAction: {
+          jwt: {
+            name: "JWT",
+            schema: {
+              type: "apiKey",
+              in: "header",
+              name: "Authorization",
+              description: "Enter your JWT token",
+            },
+            value: "", // Default value
+          },
+        },
+      },
+    })
+  );
   app.get("/api-docs.json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec);
