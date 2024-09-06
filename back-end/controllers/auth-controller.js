@@ -1,4 +1,5 @@
 const userService = require("../services/user-service");
+const authService = require("../services/auth-service");
 
 exports.signup = async (req, res) => {
   try {
@@ -19,9 +20,9 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findByCredentials(email, password);
-    res.status(200).json({ user });
+    const jwt = await authService.login({ email, password });
+    res.status(200).json({ jwt });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(401).json({ error: "Invalid credentials" });
   }
 };

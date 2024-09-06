@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users/signup:
+ * /api/auth/signup:
  *   post:
  *     summary: Registers a user
  *     requestBody:
@@ -24,7 +24,7 @@ router.post("/signup", async (req, res) => {
 
 /**
  * @swagger
- * /api/users/login:
+ * /api/auth/login:
  *   post:
  *     summary: Logs in a user
  *     requestBody:
@@ -37,8 +37,8 @@ router.post("/signup", async (req, res) => {
  *       '200':
  *         description: Successful operation
  */
-router.post("/login", (req, res) => {
-  res.send(req.body);
+router.post("/login", async (req, res) => {
+  await authController.login(req, res);
 });
 
 module.exports = router;
