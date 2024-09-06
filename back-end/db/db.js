@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const config = require(`../config/${process.env.NODE_ENV}`);
+const environment = require("../services/env-service");
+
+const config = require(`../config/${environment.environment}`);
 
 const connectDB = async () => {
   try {

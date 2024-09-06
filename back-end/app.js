@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const connectDb = require("./db/db");
 const authRoutes = require("./routes/auth-routes");
 const swaggerDocs = require("./swagger/swagger");
+const environment = require("./services/env-service");
 
 connectDb();
 const app = express();
-const port = 3001;
+const port = environment.port;
 
 // Parse JSON request bodies
 app.use(express.json());
@@ -30,6 +31,6 @@ app.get("/api/dbtest", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Running in ${process.env.NODE_ENV} mode`);
+  console.log(`Running in ${environment.environment} mode`);
   console.log(`task-manager api is listening at port ${port}`);
 });

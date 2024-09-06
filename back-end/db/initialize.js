@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const connectDb = require("./db");
+const environment = require("../services/env-service");
 
 connectDb();
 
@@ -26,8 +27,8 @@ const taskSchema = new mongoose.Schema({
 const User = mongoose.model("user", userSchema);
 const Task = mongoose.model("task", taskSchema);
 
-if (process.env.TASK_MANAGER_INITIALIZE_DB === "Y") {
-  console.log("Initializinf database...");
+if (environment.initializeDB === "Y") {
+  console.log("Initializing database...");
   const AllCollextions = ["users", "tasks"];
 
   // Handlel success or error
