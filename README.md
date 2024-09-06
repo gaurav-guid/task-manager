@@ -32,8 +32,8 @@ This contains frontend this application, which is written using React
 # Initializing database:
 
 - Ensure that a database named task-manager is created (can create using mongo express)
-- run the command `NODE_ENV=development TASK_MANAGER_INITIALIZE_DB=Y node ./db/initialize.js` in `back-end` folder
+- run the command `npm rum initialize-db` in `back-end` folder
 
 # Running the backend express app:
 
-- cd to `~/task-manager/back-end` and run `NODE_ENV=development node app.js`
+- cd to `~/task-manager/back-end` and run `npm run start`
