@@ -1,15 +1,24 @@
 const { User } = require("../db/initialize");
 const jwt = require("jsonwebtoken");
 const environment = require("./env-service");
+const userService = require("./user-service");
+const cryptoService = require("./crypto-service");
 
 exports.login = async ({ email, password }) => {
-  // DEBT: salting & hashing
-  const user = await User.findOne({ email: email, password: password });
-  if (user) {
-    return generateToken(user);
-  } else {
+  const user = await User.findOne({ email });
+  if (!user) {
+    console.log(`User with email ${email} not found`);
     throw new Error("Invalid credentials");
   }
+
+  const passwordValid = cryptoService.validatePassword(password, user.password);
+
+  if (!passwordValid) {
+    console.log(`Incorrect password login attempt for user ${email}`);
+    throw new Error("Invalid credentials");
+  }
+
+  return generateToken(user);
 };
 
 function generateToken(user) {

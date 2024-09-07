@@ -1,9 +1,9 @@
 const { User } = require("../db/initialize");
+const cryptoService = require("./crypto-service");
 
 exports.userExists = async (email) => {
   const user = await User.exists({ email: email });
 
-  console.log(user);
   if (user) {
     return true;
   } else {
@@ -16,7 +16,8 @@ exports.createUser = async ({ name, email, password }) => {
     throw new Error("User already exists");
   }
 
-  const user = await User.create({ name, email, password });
+  const passwordHash = cryptoService.saltAndHash(password);
+  const user = await User.create({ name, email, password: passwordHash });
 
   if (user) {
     return user;
