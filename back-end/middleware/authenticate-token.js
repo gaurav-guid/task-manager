@@ -18,3 +18,5 @@ exports.authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+//DEBT: Add error handling middleware
