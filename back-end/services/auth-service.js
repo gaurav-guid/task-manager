@@ -22,8 +22,8 @@ exports.login = async ({ email, password }) => {
 };
 
 function generateToken(user) {
-  const payload = { email: user.email, name: user.name };
-  const options = { expiresIn: "1m" };
+  const payload = { id: user.id, email: user.email, name: user.name };
+  const options = { expiresIn: "30m" };
 
   return jwt.sign(payload, environment.jwtSecretSigningKey, options);
 }

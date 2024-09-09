@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connectDb = require("./db/db");
 const authRoutes = require("./routes/auth-routes");
+const taskRoutes = require("./routes/task-routes");
 const swaggerDocs = require("./swagger/swagger");
 const environment = require("./services/env-service");
 const { authenticateToken } = require("./middleware/authenticate-token");
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 swaggerDocs(app, port);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/task", authenticateToken, taskRoutes);
 
 //DEBT: Remove unwanted routes
 app.get("/api", authenticateToken, (req, res) => {

@@ -31,6 +31,24 @@ const schemas = {
     },
     required: ["name", "email", "password"],
   },
+  task: {
+    type: "object",
+    properties: {
+      title: {
+        type: "string",
+      },
+      desctiption: {
+        type: "string",
+      },
+      due_date: {
+        type: "string",
+      },
+      status: {
+        type: "string",
+      },
+    },
+    required: ["title", "due_date"],
+  },
 };
 
 module.exports = schemas;

@@ -20,7 +20,7 @@ exports.createUser = async ({ name, email, password }) => {
   const user = await User.create({ name, email, password: passwordHash });
 
   if (user) {
-    return user;
+    return { ...user.toObject(), _id: null, __v: null, password: null };
   } else {
     throw new Error("Unable to create user");
   }
