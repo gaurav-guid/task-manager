@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const connectDb = require("./db/db");
 const authRoutes = require("./routes/auth-routes");
@@ -19,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use swagger
 swaggerDocs(app, port);
+
+app.use(cors()); //DEBT: Allowing from all origins all types. Bad.
 
 app.use("/api/auth", authRoutes);
 app.use("/api/task", authenticateToken, taskRoutes);

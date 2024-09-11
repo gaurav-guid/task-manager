@@ -37,3 +37,5 @@ This contains frontend this application, which is written using React
 # Running the backend express app:
 
 - cd to `~/task-manager/back-end` and run `npm run start`
+
+# DEBT: Add readme content for frontend

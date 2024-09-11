@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { login } from "../services/auth-service";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await login(email, password);
   };
 
   return (
