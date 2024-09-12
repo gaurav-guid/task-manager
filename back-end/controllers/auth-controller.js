@@ -6,7 +6,7 @@ exports.signup = async (req, res) => {
     const { name, email, password } = req.body;
     const userExists = await userService.userExists(email);
     if (userExists) {
-      res.status(409).json("User already exists.");
+      res.status(409).json({ error: "User already exists." });
       return;
     }
 
