@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../services/auth-service";
+import { Link } from "react-router-dom";
 import "./login.css";
 
 const Login = () => {
@@ -56,6 +57,11 @@ const Login = () => {
                   </button>
                 </div>
               </form>
+              <div className="text-center mt-3">
+                <p>
+                  Don't have an account? <Link to="/signup">Signup here</Link>
+                </p>
+              </div>
             </div>
           </div>
         </div>
