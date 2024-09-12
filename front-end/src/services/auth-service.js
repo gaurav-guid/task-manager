@@ -13,6 +13,6 @@ export async function login(email, password) {
     localStorage.setItem("jwt", data.jwt);
   } catch (error) {
     console.error("Login error", error);
-    alert("Login failed. Please try again.");
+    return "Login failed. Please try again.";
   }
 }
