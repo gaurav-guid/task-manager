@@ -19,6 +19,25 @@ exports.updateTask = async (req, res) => {
   }
 };
 
+exports.getTaskById = async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    const task = await taskService.getTaskById(taskId, req.user.id);
+    res.status(200).json({ task });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+exports.getAllTasks = async (req, res) => {
+  try {
+    const tasks = await taskService.getAllTasks(req.user.id);
+    res.status(200).json({ tasks });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 exports.getTask = (req, res) => {
   res.json({ message: "Task fetched successfully" });
 };

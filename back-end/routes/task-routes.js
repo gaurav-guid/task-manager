@@ -47,4 +47,48 @@ router.put("/:taskId", async (req, res) => {
   await taskController.updateTask(req, res);
 });
 
+/**
+ * @swagger
+ * /api/task/{taskId}:
+ *   get:
+ *     summary: Get a task by ID
+ *     parameters:
+ *       - in: path
+ *         name: taskId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/task'
+ *       '404':
+ *         description: Task not found
+ */
+router.get("/:taskId", async (req, res) => {
+  await taskController.getTaskById(req, res);
+});
+
+/**
+ * @swagger
+ * /api/task:
+ *   get:
+ *     summary: List all tasks
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/task'
+ */
+router.get("/", async (req, res) => {
+  await taskController.getAllTasks(req, res);
+});
+
 module.exports = router;

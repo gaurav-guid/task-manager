@@ -48,12 +48,19 @@ exports.updateTask = async (taskId, task, userId) => {
   }
 };
 
-exports.getTask = async (id) => {
+exports.getTaskById = async (id, userId) => {
   const task = await Task.findById(id);
 
-  if (task) {
-    return task;
-  } else {
+  if (!task) {
     throw new Error(`Task (${id}) not found`);
+  } else if (task.user_id != userId) {
+    throw new Error("You are not authorized to view this task");
   }
+
+  return task;
+};
+
+exports.getAllTasks = async (userId) => {
+  const tasks = await Task.find({ user_id: userId });
+  return tasks;
 };
