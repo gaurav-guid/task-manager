@@ -7,7 +7,7 @@ exports.createTask = async (task, userId) => {
     description,
     due_date,
     status,
-    userId,
+    user_id: userId,
   });
 
   if (createdTask) {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { login } from "../services/auth-service";
-import { Link } from "react-router-dom";
+import loginService from "../services/auth-service";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 
 const Login = () => {
@@ -8,10 +8,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const navigate = useNavigate();
+
+  const login = async (e) => {
     e.preventDefault();
-    const error = await login(email, password);
-    setError(error);
+    const error = await loginService.login(email, password);
+    if (error) {
+      setError(error);
+    } else {
+      navigate("/tasks");
+    }
   };
 
   return (
@@ -26,7 +32,7 @@ const Login = () => {
                   {error}
                 </div>
               )}
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={login}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     Email:

@@ -9,7 +9,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const signup = async (e) => {
     e.preventDefault();
     const error = await signup(name, email, password);
     setError(error);
@@ -27,7 +27,7 @@ const Signup = () => {
                   {error}
                 </div>
               )}
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={signup}>
                 <div className="mb-3">
                   <label htmlFor="name" className="form-label">
                     Name:

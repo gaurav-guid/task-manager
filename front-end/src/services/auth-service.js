@@ -1,6 +1,6 @@
 import { fetchWithAuth } from "../utils/api";
 
-export async function login(email, password) {
+async function login(email, password) {
   try {
     const res = await fetchWithAuth("/api/auth/login", {
       method: "POST",
@@ -21,7 +21,7 @@ export async function login(email, password) {
   }
 }
 
-export async function signup(name, email, password) {
+async function signup(name, email, password) {
   try {
     const res = await fetchWithAuth("/api/auth/signup", {
       method: "POST",
@@ -38,3 +38,10 @@ export async function signup(name, email, password) {
     return "Signup failed. Please try again.";
   }
 }
+
+const loginService = {
+  login,
+  signup,
+};
+
+export default loginService;
