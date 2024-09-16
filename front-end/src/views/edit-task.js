@@ -6,7 +6,7 @@ const EditTask = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
-  const [status, setStatus] = useState("Incomplete");
+  const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
 
   let location = useLocation();
