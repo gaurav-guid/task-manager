@@ -19,6 +19,16 @@ exports.updateTask = async (req, res) => {
   }
 };
 
+exports.deleteTask = async (req, res) => {
+  try {
+    const taskId = req.params.taskId;
+    await taskService.deleteTask(taskId, req.user.id);
+    res.status(200).json("Task deleted");
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 exports.getTaskById = async (req, res) => {
   try {
     const taskId = req.params.taskId;

@@ -18,7 +18,6 @@ exports.createTask = async (task, userId) => {
 };
 
 exports.updateTask = async (taskId, task, userId) => {
-  console.log(task);
   const { id, title, description, due_date, status, user_id } = task;
 
   if (id && id !== taskId) {
@@ -34,18 +33,34 @@ exports.updateTask = async (taskId, task, userId) => {
     throw new Error("Ownership of a task can not be changed");
   }
 
-  const updatedTask = await Task.findByIdAndUpdate(taskId, {
-    title,
-    description,
-    due_date,
-    status,
-  });
+  const updatedTask = await Task.findByIdAndUpdate(
+    taskId,
+    {
+      title,
+      description,
+      due_date,
+      status,
+    },
+    { new: true }
+  );
 
   if (updatedTask) {
     return updatedTask;
   } else {
     throw new Error("Unable to update task");
   }
+};
+
+exports.deleteTask = async (taskId, userId) => {
+  const task = await Task.findById(taskId);
+
+  if (!task) {
+    throw new Error(`Task (${taskId}) not found`);
+  } else if (task.user_id != userId) {
+    throw new Error("You are not authorized to delete this task");
+  }
+
+  await Task.findByIdAndDelete(taskId);
 };
 
 exports.getTaskById = async (id, userId) => {

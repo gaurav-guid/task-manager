@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import taskService from "../services/task-service";
 import { Link, useLocation } from "react-router-dom";
+import { navigateTo } from "../services/navigation-service";
 
 const EditTask = () => {
+  //DEBT: replace individual useState by useState of task
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
@@ -13,21 +15,64 @@ const EditTask = () => {
   const params = new URLSearchParams(location.search);
   const taskId = params.get("taskId");
 
+  useEffect(() => {
+    fetchTask();
+  }, []);
+
+  const fetchTask = async () => {
+    if (isNew) {
+      return;
+    }
+    try {
+      setError(null);
+      const task = await taskService.getTaskById(taskId);
+      setTitle(task.title);
+      setDescription(task.description);
+      setDueDate(task.due_date.split("T")[0]);
+      setStatus(task.status);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      setError("Failed to fetch tasks. Please try again later.");
+    }
+  };
+
   const isNew = !taskId;
 
-  const handleSubmit = async (e) => {
+  const save = async (e) => {
     setError("");
     e.preventDefault();
+    let task = {};
     try {
-      const task = await taskService.createTask({
-        title,
-        description,
-        due_date: dueDate,
-        status,
-      });
+      if (isNew) {
+        task = await taskService.createTask({
+          title,
+          description,
+          due_date: dueDate,
+          status,
+        });
+      } else {
+        task = await taskService.updateTask(taskId, {
+          title,
+          description,
+          due_date: dueDate,
+          status,
+        });
+      }
+      setTitle(task.title);
+      setDescription(task.description);
+      setDueDate(task.due_date.split("T")[0]);
+      setStatus(task.status);
+
+      navigateTo("/tasks");
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const deleteTask = async (e) => {
+    e.preventDefault();
+    await taskService.deleteTask(taskId);
+    navigateTo("/tasks");
   };
 
   return (
@@ -44,7 +89,7 @@ const EditTask = () => {
                   {error}
                 </div>
               )}
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={save}>
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
                     Title:
@@ -77,7 +122,7 @@ const EditTask = () => {
                     type="date"
                     id="dueDate"
                     value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
+                    onChange={(e) => setDueDate(e.target.value.split("T")[0])}
                   />
                 </div>
                 <div className="mb-3">
@@ -100,6 +145,15 @@ const EditTask = () => {
                   <button type="submit" className="btn btn-primary">
                     {isNew ? "Create" : "Save"}
                   </button>
+                  {!isNew && (
+                    <button
+                      type="button"
+                      className="mt-4 btn btn-danger"
+                      onClick={deleteTask}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               </form>
             </div>

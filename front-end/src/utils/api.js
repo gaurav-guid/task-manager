@@ -1,3 +1,5 @@
+import { navigateTo } from "../services/navigation-service";
+
 export const fetchWithAuth = async (url, options = {}) => {
   const jwt = localStorage.getItem("jwt");
   const apiBaseUrl = "http://localhost:3001"; //DEBT: Pick from env var
@@ -19,7 +21,10 @@ export const fetchWithAuth = async (url, options = {}) => {
   });
 
   const data = await response.json();
-  console.log(22, data);
+  if (response.status === 401) {
+    localStorage.removeItem("jwt");
+    navigateTo("/login");
+  }
   if (!response.ok) {
     console.log(
       `Request failed with status: ${response.status} and message: ${data.error}`

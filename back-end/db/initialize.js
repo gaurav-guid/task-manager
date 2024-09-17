@@ -18,7 +18,7 @@ userSchema.index({ email: "text" });
 const taskSchema = new mongoose.Schema(
   {
     title: { type: mongoose.Schema.Types.String, required: true },
-    desctiption: { type: mongoose.Schema.Types.String },
+    description: { type: mongoose.Schema.Types.String },
     due_date: { type: mongoose.Schema.Types.Date, required: true, index: true },
     status: {
       type: mongoose.Schema.Types.String,

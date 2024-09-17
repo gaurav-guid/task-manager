@@ -91,4 +91,25 @@ router.get("/", async (req, res) => {
   await taskController.getAllTasks(req, res);
 });
 
+/**
+ * @swagger
+ * /api/task/{id}:
+ *   delete:
+ *     summary: Delete a task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *       '400':
+ *         description: Bad request
+ */
+router.delete("/:taskId", async (req, res) => {
+  await taskController.deleteTask(req, res);
+});
+
 module.exports = router;

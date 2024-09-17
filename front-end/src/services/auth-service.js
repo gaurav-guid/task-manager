@@ -1,4 +1,5 @@
 import { fetchWithAuth } from "../utils/api";
+import { navigateTo } from "./navigation-service";
 
 async function login(email, password) {
   try {
@@ -39,9 +40,20 @@ async function signup(name, email, password) {
   }
 }
 
+function isLoggedIn() {
+  return !!localStorage.getItem("jwt");
+}
+
+function logOut() {
+  localStorage.removeItem("jwt");
+  navigateTo("login");
+}
+
 const loginService = {
   login,
   signup,
+  isLoggedIn,
+  logOut,
 };
 
 export default loginService;

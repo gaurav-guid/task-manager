@@ -28,7 +28,11 @@ const Tasks = () => {
     );
   };
 
-  const isOverdue = (dateString) => {
+  const isOverdue = (task) => {
+    if (task.status.toLowerCase() === "completed") {
+      return false;
+    }
+    const dateString = task.due_date;
     if (!dateString) return false;
     const [year, month, day] = dateString.split("T")[0].split("-");
     const dueDate = new Date(year, month - 1, day);
@@ -71,7 +75,11 @@ const Tasks = () => {
           <div key={task.id} className="card mb-2">
             <div className="card-body">
               <h5 className="card-title">{task.title}</h5>
-              <p className="card-text">{task.description}</p>
+              <p className="card-text">
+                {task.description && task.description.length > 60
+                  ? task.description.substring(0, 60) + "..."
+                  : task.description}
+              </p>
               <p className="card-text">
                 <small className="text-muted">
                   Due: {formatDate(task.due_date)}
@@ -79,12 +87,12 @@ const Tasks = () => {
               </p>
               <p className="card-text">
                 <span className="badge bg-danger">
-                  {isOverdue(task.due_date) && <span>Overdue</span>}
+                  {isOverdue(task) && <span>Overdue</span>}
                 </span>
               </p>
               <Link
-                to={`/editTask?taskId=${task._id}`}
-                className="btn btn-primary btn-sm"
+                to={`/task?taskId=${task._id}`}
+                className="btn btn-secondary btn-sm"
               >
                 Edit
               </Link>
